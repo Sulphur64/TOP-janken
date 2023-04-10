@@ -28,15 +28,13 @@ body{
     margin-left: 50px;
 }
 
-.playerChoice{
+.playerText{
     margin: 3px;
     font-size: large;
     color: white;
 }
 
-.rock,
-.paper,
-.scissors{
+.button{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -61,7 +59,7 @@ body{
     height: 150px;
     width: 300px;
     font-size: 40px;
-    padding-left: 100px;
+    padding-left: 20px;
 
     background-color: inherit;
     color: white;
