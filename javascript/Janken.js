@@ -101,7 +101,7 @@ function outcome (num1, num2){
     setTimeout(() => { if (num1 > num2){
         document.querySelector(".result").textContent =`You win ! Your ${playerChoice} beat BOT's ${botChoice}!`;
         }
-        else if (num1 = num2) {
+        else if (num1 == num2) {
         document.querySelector(".result").textContent =`EX AEQUO ! Your ${playerChoice} equals BOT's ${botChoice}!`;
         } else {
         document.querySelector(".result").textContent =`BOT win ! Your ${playerChoice} is beaten by BOT's ${botChoice}! `;
