@@ -1,11 +1,11 @@
-let playerChoice; 
-let botChoice;
-let playerValue;
-let botValue;
+let playerChoice= " "; 
+let botChoice= " ";
+let playerValue = 0;
+let botValue = 0;
 
-let paper;
-let scissors;
-let rock;
+let paper = 0;
+let scissors = 0;
+let rock = 0;
 
 let symbolValue;
 
@@ -94,19 +94,19 @@ function symbolForce (choice) { //compare the string to the number
 
 function outcome (num1, num2){ 
 
-    document.querySelector(".result").textContent ="ROCK";
-    setTimeout (3000);
-    document.querySelector(".result").textContent ="PAPER";
-    setTimeout (3000);
-    document.querySelector(".result").textContent ="SCISSORS";
-    setTimeout (3000);
+    setTimeout(() => {document.querySelector(".result").textContent ="ROCK !"},500);
+    setTimeout(() => {document.querySelector(".result").textContent ="PAPER !"}, 2000);
+    setTimeout(() => {document.querySelector(".result").textContent ="SCISSORS !!!"}, 4000);
 
-    if (num1 > num2){
+    setTimeout(() => { if (num1 > num2){
         document.querySelector(".result").textContent =`You win ! Your ${playerChoice} beat BOT's ${botChoice}!`;
-    }
-    else if (num1 = num2) {
+        }
+        else if (num1 = num2) {
         document.querySelector(".result").textContent =`EX AEQUO ! Your ${playerChoice} equals BOT's ${botChoice}!`;
-    } else {
+        } else {
         document.querySelector(".result").textContent =`BOT win ! Your ${playerChoice} is beaten by BOT's ${botChoice}! `;
-    }
+        }
+
+        document.querySelector(".playerText").textContent = "Press a Symbol to play again !";
+    },5500);
 }
