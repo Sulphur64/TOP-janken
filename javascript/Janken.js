@@ -1,5 +1,16 @@
+let playerScore = 0;
+let BotScore = 0;
+
+
+function gameloop () {
+    
+    while (playerScore < 5 || BotScore < 5) {
+        //mettre tout le script là
+
+
 let playerChoice= " "; 
 let botChoice= " ";
+
 let playerValue = 0;
 let botValue = 0;
 
@@ -27,6 +38,8 @@ playerInput.forEach((i) => {
         botValue = symbolValue;
 
         outcome(playerValue,botValue);
+
+        scoreKeeper (playerScore,BotScore)
     })
 })
 
@@ -45,8 +58,6 @@ function computerChoice () { //botChoice generate a number between 1 and 99, eac
     }
     //bot color turns bright red would be nice, check how to change color in the DOM
 }
-
-console.log(`botChoice : ${botChoice}`)
 
 
 
@@ -94,19 +105,44 @@ function symbolForce (choice) { //compare the string to the number
 
 function outcome (num1, num2){ 
 
-    setTimeout(() => {document.querySelector(".result").textContent ="ROCK !"},500);
-    setTimeout(() => {document.querySelector(".result").textContent ="PAPER !"}, 2000);
-    setTimeout(() => {document.querySelector(".result").textContent ="SCISSORS !!!"}, 4000);
+    setTimeout(() => {document.querySelector(".result").textContent ="ROCK !"},250);
+    setTimeout(() => {document.querySelector(".result").textContent ="PAPER !"}, 1500);
+    setTimeout(() => {document.querySelector(".result").textContent ="SCISSORS !!!"}, 3000);
 
     setTimeout(() => { if (num1 > num2){
         document.querySelector(".result").textContent =`You win ! Your ${playerChoice} beat BOT's ${botChoice}!`;
+        playerScore = playerScore + 1;
         }
         else if (num1 == num2) {
         document.querySelector(".result").textContent =`EX AEQUO ! Your ${playerChoice} equals BOT's ${botChoice}!`;
+
         } else {
         document.querySelector(".result").textContent =`BOT win ! Your ${playerChoice} is beaten by BOT's ${botChoice}! `;
+        BotScore = BotScore +1;
         }
 
         document.querySelector(".playerText").textContent = "Press a Symbol to play again !";
-    },5500);
+    },4500);
+}
+
+// ajout de la fonction match en 5, while <5 loop + cas 
+
+
+} if (playerScore == 5) {
+    document.querySelector(".result").textContent =`xX YOU WON THE GAME ! Xx`;
+    let button = document.createElement("button");
+    button.innerHTML = "Reset ?";
+    let body = document.getElementsByName("body")[0];
+    body.appendChild(button);
+    button.addEventListener("click", location.reload)
+
+} else if (BotScore == 5) {
+    document.querySelector(".result").textContent =`xX BOT WON THE GAME ! Xx`;
+    let button = document.createElement("button");
+    button.innerHTML = "Reset ?";
+    let body = document.getElementsByName("body")[0];
+    body.appendChild(button);
+    button.addEventListener("click", location.reload)
+
+}
 }

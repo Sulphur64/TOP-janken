@@ -9,15 +9,20 @@
     </head>
 
     <body>
-        <div class="container">                            <!-- creating a frame to oppose player to the bot-->
+        <div class="container">
             <div class="playerContainer">
                 <div class="playerText"> Choose your sign !</div>
                 <button class="button " value="rock">&#9994</button>
                 <button class="button " value="paper">&#9995</button>
                 <button class="button " value="scissors">&#9996</button>
+                <div class="playerScore">0</div>
             </div>
-            <p class="result">Ready ?</p>                         <!-- show 1 2 3 then result then pop a restart button ?-->
-            <div class="botIcon">BOT</div>                     <!-- maybe just a round button or an image-->
+            <p class="result">Ready ?</p>
+             
+            <div class="botContainer">
+            <div class="botIcon">BOT</div>
+                <div class="botScore">0</div>
+            </div>                     
         </div>
 
         <script type="text/javascript" src="./javascript/Janken.js"></script>
