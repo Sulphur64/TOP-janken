@@ -97,13 +97,17 @@ function symbolForce (choice) { //compare the string to the number
 
 function graphAnswer(choice){ // transcribe the choice to a symbol
     if (choice === "rock"){
-        return "&#9994";
+        return "\u{270A}";
     } else if (choice === "paper"){
-        return "&#9995";
+        return "\u{270B}";
     } else {
-        return "&#9996";
+        return "\u{270C}";
     }
 
+}
+
+function graphBot (){ // draw BOT symbol in it's button for clarity
+    document.querySelector(".botSymbol").textContent =`${graphAnswer(botChoice)}`;
 }
 
 function outcome (num1, num2){ 
@@ -114,6 +118,7 @@ function outcome (num1, num2){
 
     setTimeout(() => { if (num1 > num2){
 
+        graphBot();
         document.querySelector(".result").textContent =`You win ! Your ${graphAnswer(playerChoice)} beat BOT's ${graphAnswer(botChoice)}!`;
         playerScore = playerScore + 1;
         document.querySelector(".playerScore").textContent = playerScore;
@@ -121,11 +126,13 @@ function outcome (num1, num2){
 
         } else if (num1 == num2) {
 
+        graphBot();
         document.querySelector(".result").textContent =`EX AEQUO ! Your ${graphAnswer(playerChoice)} equals BOT's ${graphAnswer(botChoice)}!`;
         scoreKeeper();
 
         } else {
 
+        graphBot();
         document.querySelector(".result").textContent =`BOT win ! Your ${graphAnswer(playerChoice)} is beaten by BOT's ${graphAnswer(botChoice)}! `;
         botScore = botScore +1;
         document.querySelector(".botScore").textContent = botScore;
@@ -160,5 +167,5 @@ function resetButton () {
     body.appendChild(button);
     button.innerHTML = "Reset ?";
     button.className =  "resetButton"
-    button.addEventListener("click", location.reload)
+    button.addEventListener("click",() => location.reload())
 }
