@@ -148,11 +148,11 @@ function scoreKeeper () {
 
     matchesPlayed += 1;
 
-    if (playerScore > 2 && matchesPlayed >=5) {
+    if (playerScore > 2 && (matchesPlayed >=5 || playerScore <= 3)) {
         document.querySelector(".result").textContent =`xX YOU WON THE GAME ! Xx`; 
         resetButton();
     
-    } else if (botScore > 2 && matchesPlayed >=5) {
+    } else if (botScore > 2 && (matchesPlayed >=5 || botScore <= 3)) {
         document.querySelector(".result").textContent =`xX BOT WON THE GAME ! Xx`;
         resetButton();
     
