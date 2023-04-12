@@ -2,68 +2,55 @@ let playerScore = 0;
 let botScore = 0;
 let matchesPlayed = 0;
 
-//let UserName= prompt("enter a name :", "Abaddon, Destroyer, The")
-gameloop();
 
-function gameloop () {
-    for (;matchesPlayed < 5 ; matchesPlayed + 1){
+let playerChoice; //global because called by result in outcome ()
+let botChoice;
 
-        
-    }
-}
+let playerValue;
+let botValue;
 
-
-
-
-
-function game () { // launch the whole script
-
-let playerChoice= " "; 
-let botChoice= " ";
-
-let playerValue = 0;
-let botValue = 0;
-
-let paper = 0;
-let scissors = 0;
-let rock = 0;
+let paper;
+let scissors;
+let rock;
 
 let symbolValue;
 
 
 let playerInput = document.querySelectorAll("button"); // doit return true et lancer la sélection
-playerInput.forEach((i) => {
-    i.addEventListener("click", (e) => {
-        playerChoice = e.target.value;
-        document.querySelector(".playerText").textContent = "You chose ! get ready";
-
-        computerChoice();
-
-        symbolPotency(playerChoice); //crée la force des symboles
-        symbolForce (playerChoice); // corrèle le string aux valeurs num
-        playerValue = symbolValue; // donne la force du symbole au joueur
-        
-
-        symbolForce (botChoice);
-        botValue = symbolValue;
-
-        outcome(playerValue,botValue);
-
-        break;
-    })
+playerInput.forEach((button) => {
+    button.addEventListener("click", (event) => gameFlow (event))
 })
+
+function gameFlow (event){ // created this f() to dissociate it from button input, runs the game
+
+    playerChoice = event.target.value;
+    document.querySelector(".playerText").textContent = "You chose ! get ready";
+
+    botChoice = computerChoice();
+
+    symbolPotency(playerChoice); //crée la force des symboles
+    
+    playerValue = symbolForce (playerChoice) ; // donne la force du symbole au joueur
+    
+    
+    botValue = symbolForce (botChoice);
+
+    outcome(playerValue,botValue);
+}
+
+
 
 function computerChoice () { //botChoice generate a number between 1 and 99, each tier is a choice
     let random = Math.floor(Math.random()*99);
 
     if (random <= 33){
-        botChoice = "paper";
+        return "paper";
 
     } else if ((random <= 66) &&(random >= 33)){
-        botChoice = "scissors";
+        return "scissors";
 
     } else {
-        botChoice = "rock";
+        return "rock";
 
     }
     //bot color turns bright red would be nice, check how to change color in the DOM
@@ -99,18 +86,25 @@ function symbolPotency (symbolName){ // define the value of each symbol when pla
 
 function symbolForce (choice) { //compare the string to the number
 
-    symbolValue=0;
-
     if (choice === "rock"){
-        symbolValue = rock;
+        return rock;
     } else if (choice === "paper"){
-        symbolValue = paper;
-    } else if (choice === "scissors"){
-        symbolValue = scissors;
+        return paper;
+    } else {
+        return scissors;
     }
 }
 
+function graphAnswer(choice){ // transcribe the choice to a symbol
+    if (choice === "rock"){
+        return "&#9994";
+    } else if (choice === "paper"){
+        return "&#9995";
+    } else {
+        return "&#9996";
+    }
 
+}
 
 function outcome (num1, num2){ 
 
@@ -119,23 +113,52 @@ function outcome (num1, num2){
     setTimeout(() => {document.querySelector(".result").textContent ="SCISSORS !!!"}, 3000);
 
     setTimeout(() => { if (num1 > num2){
-        document.querySelector(".result").textContent =`You win ! Your ${playerChoice} beat BOT's ${botChoice}!`;
+
+        document.querySelector(".result").textContent =`You win ! Your ${graphAnswer(playerChoice)} beat BOT's ${graphAnswer(botChoice)}!`;
         playerScore = playerScore + 1;
         document.querySelector(".playerScore").textContent = playerScore;
-        }
-        else if (num1 == num2) {
-        document.querySelector(".result").textContent =`EX AEQUO ! Your ${playerChoice} equals BOT's ${botChoice}!`;
+        scoreKeeper();
+
+        } else if (num1 == num2) {
+
+        document.querySelector(".result").textContent =`EX AEQUO ! Your ${graphAnswer(playerChoice)} equals BOT's ${graphAnswer(botChoice)}!`;
+        scoreKeeper();
 
         } else {
-        document.querySelector(".result").textContent =`BOT win ! Your ${playerChoice} is beaten by BOT's ${botChoice}! `;
+
+        document.querySelector(".result").textContent =`BOT win ! Your ${graphAnswer(playerChoice)} is beaten by BOT's ${graphAnswer(botChoice)}! `;
         botScore = botScore +1;
         document.querySelector(".botScore").textContent = botScore;
+        scoreKeeper();
+
         }
 
         document.querySelector(".playerText").textContent = "Press a Symbol to play again !";
     },4500);
 }
 
-// ajout de la fonction match en 5, while <5 loop + cas 
-return;
+function scoreKeeper () {
+
+    matchesPlayed += 1;
+
+    if (playerScore > 2 && matchesPlayed >=5) {
+        document.querySelector(".result").textContent =`xX YOU WON THE GAME ! Xx`; 
+        resetButton();
+    
+    } else if (botScore > 2 && matchesPlayed >=5) {
+        document.querySelector(".result").textContent =`xX BOT WON THE GAME ! Xx`;
+        resetButton();
+    
+    }
+
+}
+
+function resetButton () {
+    let button = document.createElement("button");
+    let body = document.querySelector("body");
+
+    body.appendChild(button);
+    button.innerHTML = "Reset ?";
+    button.className =  "resetButton"
+    button.addEventListener("click", location.reload)
 }
