@@ -1,35 +1,18 @@
 let playerScore = 0;
 let botScore = 0;
+let matchesPlayed = 0;
 
 //let UserName= prompt("enter a name :", "Abaddon, Destroyer, The")
-gameloop(playerScore,botScore);
+gameloop();
 
-function gameloop (playerScore,botScore) {
-    
-    if (playerScore >= 5) {
-        document.querySelector(".result").textContent =`xX YOU WON THE GAME ! Xx`; // username added when the scorekeep works
-        let button = document.createElement("button");
-        button.innerHTML = "Reset ?";
-        let body = document.getElementsByName("body")[0];
-        body.appendChild(button);
-        button.addEventListener("click", location.reload)
-    
-    } else if (botScore >= 5) {
-        document.querySelector(".result").textContent =`xX BOT WON THE GAME ! Xx`;
-        let button = document.createElement("button");
-        button.innerHTML = "Reset ?";
-        let body = document.getElementsByName("body")[0];
-        body.appendChild(button);
-        button.addEventListener("click", location.reload)
-    
-    } else {
-        for (;;){ 
-            game(); // cleaner than putting the whole thing here
+function gameloop () {
+    for (;matchesPlayed < 5 ; matchesPlayed + 1){
 
-        break;
-        } 
+        
     }
 }
+
+
 
 
 
@@ -66,6 +49,7 @@ playerInput.forEach((i) => {
 
         outcome(playerValue,botValue);
 
+        break;
     })
 })
 
