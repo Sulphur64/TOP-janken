@@ -103,7 +103,7 @@ function graphAnswer(choice){ // transcribe the choice to a symbol
     }
 }
 
-function graphBot (){ // draw BOT symbol in it's button for clarity
+function graphBot (){ // draw BOT symbol in its button for clarity
     document.querySelector(".botSymbol").textContent =`${graphAnswer(botChoice)}`;
 }
 
@@ -152,7 +152,6 @@ function scoreKeeper () { // keep the number of matches played, compare the indi
         resetButton();
     
     }
-
 }
 
 function resetButton () { //create a DOM button under the container, refresh the page if pressed
