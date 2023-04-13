@@ -2,7 +2,6 @@ let playerScore = 0;
 let botScore = 0;
 let matchesPlayed = 0;
 
-
 let playerChoice; //global because called by result in outcome ()
 let botChoice;
 
@@ -16,23 +15,20 @@ let rock;
 let symbolValue;
 
 
-let playerInput = document.querySelectorAll("button"); // doit return true et lancer la sélection
-playerInput.forEach((button) => {
-    button.addEventListener("click", (event) => gameFlow (event))
-})
+let playerInput = document.querySelectorAll("button"); // for each creates a list of instructions for each element specified, NOT A LOOP
+playerInput.forEach((button) => button.addEventListener("click", (event) => gameFlow (event)))
 
-function gameFlow (event){ // created this f() to dissociate it from button input, runs the game
 
+function gameFlow (event){ // created this f() to dissociate it from button input, runs the whole process
     playerChoice = event.target.value;
     document.querySelector(".playerText").textContent = "You chose ! get ready";
 
     botChoice = computerChoice();
 
-    symbolPotency(playerChoice); //crée la force des symboles
-    
-    playerValue = symbolForce (playerChoice) ; // donne la force du symbole au joueur
-    
-    
+    symbolPotency(playerChoice); //creates the weight of the symbols from the first player
+
+    playerValue = symbolForce (playerChoice); // give the symbols weight to the player
+   
     botValue = symbolForce (botChoice);
 
     outcome(playerValue,botValue);
@@ -40,7 +36,8 @@ function gameFlow (event){ // created this f() to dissociate it from button inpu
 
 
 
-function computerChoice () { //botChoice generate a number between 1 and 99, each tier is a choice
+function computerChoice (){ //botChoice generate a number between 1 and 99, each tier is a choice
+
     let random = Math.floor(Math.random()*99);
 
     if (random <= 33){
@@ -53,14 +50,13 @@ function computerChoice () { //botChoice generate a number between 1 and 99, eac
         return "rock";
 
     }
-    //bot color turns bright red would be nice, check how to change color in the DOM
 }
 
 
 
 function symbolPotency (symbolName){ // define the value of each symbol when player enter his
 
-    let paperWeight = 2;          //to be incremented by symbolForce
+    let paperWeight = 2;          // could use an object later, see Camille cleaning
     let scissorsWeight = 2;
     let rockWeight = 2;
 
@@ -80,11 +76,10 @@ function symbolPotency (symbolName){ // define the value of each symbol when pla
         scissors = scissorsWeight - 1;
 
     }
-
 }
 
 
-function symbolForce (choice) { //compare the string to the number
+function symbolForce (choice){ //compare the string to the number
 
     if (choice === "rock"){
         return rock;
@@ -98,26 +93,29 @@ function symbolForce (choice) { //compare the string to the number
 function graphAnswer(choice){ // transcribe the choice to a symbol
     if (choice === "rock"){
         return "\u{270A}";
+
     } else if (choice === "paper"){
         return "\u{270B}";
+
     } else {
         return "\u{270C}";
+        
     }
-
 }
 
 function graphBot (){ // draw BOT symbol in it's button for clarity
     document.querySelector(".botSymbol").textContent =`${graphAnswer(botChoice)}`;
 }
 
-function outcome (num1, num2){ 
+function outcome (num1, num2){ // register the biggest value between players, return the math outcome, increment the individual scores and launch scoreKeep
 
     setTimeout(() => {document.querySelector(".result").textContent ="ROCK !"},250);
     setTimeout(() => {document.querySelector(".result").textContent ="PAPER !"}, 1500);
     setTimeout(() => {document.querySelector(".result").textContent ="SCISSORS !!!"}, 3000);
 
-    setTimeout(() => { if (num1 > num2){
+    setTimeout(() => {
 
+        if (num1 > num2){
         graphBot();
         document.querySelector(".result").textContent =`You win ! Your ${graphAnswer(playerChoice)} beat BOT's ${graphAnswer(botChoice)}!`;
         playerScore = playerScore + 1;
@@ -127,7 +125,6 @@ function outcome (num1, num2){
         graphBot();
         document.querySelector(".result").textContent =`EX AEQUO ! Your ${graphAnswer(playerChoice)} equals BOT's ${graphAnswer(botChoice)}!`;
         
-
         } else {
         graphBot();
         document.querySelector(".result").textContent =`BOT win ! Your ${graphAnswer(playerChoice)} is beaten by BOT's ${graphAnswer(botChoice)}! `;
@@ -142,7 +139,7 @@ function outcome (num1, num2){
     },4500);
 }
 
-function scoreKeeper () {
+function scoreKeeper () { // keep the number of matches played, compare the individual scores
 
     matchesPlayed += 1;
 
@@ -158,7 +155,8 @@ function scoreKeeper () {
 
 }
 
-function resetButton () {
+function resetButton () { //create a DOM button under the container, refresh the page if pressed
+    
     let button = document.createElement("button");
     let body = document.querySelector("body");
 
