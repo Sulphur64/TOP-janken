@@ -122,25 +122,23 @@ function outcome (num1, num2){
         document.querySelector(".result").textContent =`You win ! Your ${graphAnswer(playerChoice)} beat BOT's ${graphAnswer(botChoice)}!`;
         playerScore = playerScore + 1;
         document.querySelector(".playerScore").textContent = playerScore;
-        scoreKeeper();
 
         } else if (num1 == num2) {
-
         graphBot();
         document.querySelector(".result").textContent =`EX AEQUO ! Your ${graphAnswer(playerChoice)} equals BOT's ${graphAnswer(botChoice)}!`;
-        scoreKeeper();
+        
 
         } else {
-
         graphBot();
         document.querySelector(".result").textContent =`BOT win ! Your ${graphAnswer(playerChoice)} is beaten by BOT's ${graphAnswer(botChoice)}! `;
         botScore = botScore +1;
         document.querySelector(".botScore").textContent = botScore;
-        scoreKeeper();
-
+        
         }
 
+        scoreKeeper();
         document.querySelector(".playerText").textContent = "Press a Symbol to play again !";
+
     },4500);
 }
 
@@ -148,12 +146,12 @@ function scoreKeeper () {
 
     matchesPlayed += 1;
 
-    if (playerScore > 2 && (matchesPlayed >=5 || playerScore <= 3)) {
-        document.querySelector(".result").textContent =`xX YOU WON THE GAME ! Xx`; 
+    if ((matchesPlayed >= 5) && (playerScore > botScore)) {
+        document.querySelector(".result").textContent =`\u{058D} YOU WON THE GAME ! \u{058E}`; 
         resetButton();
     
-    } else if (botScore > 2 && (matchesPlayed >=5 || botScore <= 3)) {
-        document.querySelector(".result").textContent =`xX BOT WON THE GAME ! Xx`;
+    } else if ((matchesPlayed >= 5) && (botScore > playerScore)) {
+        document.querySelector(".result").textContent =`\u{058D} BOT WON THE GAME ! \u{058E}`;
         resetButton();
     
     }
