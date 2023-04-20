@@ -4,22 +4,29 @@ const gameWindow = document.createElement("div");
 
 const botSpeak = document.createElement("div")
 
+const lightPath = document.createElement("div");
+
 body.appendChild(gameWindow);
 
 gameFlow()
 
 function gameFlow () {
+
     introduction();
+
     gameWindow.addEventListener("transitionend", ()=>{    
      botTalk(1);
-
+     gameWindow.addEventListener("click", trialRoom,{once:true})
     },{once:true});
+
+    
+
 }
 
 function introduction() { // create the start button and initialize the game UI
 
     const startButton = document.createElement("button");
-    const lightPath = document.createElement("div");
+    
 
     startButton.classList.add("start-button");
     startButton.textContent = "Begin the trial";
@@ -53,6 +60,16 @@ function botTalk (dialog){ //BOT speaking, handle the scores and matches too
         body.insertBefore(botSpeak,gameWindow)
         botSpeak.textContent="ENTER, HUMAN"
     } else if (dialog==2){
-        gameWindow.appendChild.apply(botSpeak)
+        gameWindow.appendChild(botSpeak)
     }
+};
+
+function trialRoom () { // main janken event, this will loop every game of 5
+    lightPath.remove();
+    gameWindow.classList.add("gamewindow-while-game");
+    const trialRoomFloor= document.createElement("div");
+    botTalk(2)
+
+
+    
 }
