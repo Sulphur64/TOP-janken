@@ -5,23 +5,14 @@ let matchesPlayed = 0;
 let playerChoice; //global because called by result in outcome ()
 let botChoice;
 
-let playerValue;
-let botValue;
 
-let paper;
-let scissors;
-let rock;
-
-let symbolValue;
+const playerInput = document.querySelectorAll("button"); // for each creates a list of instructions for each element specified, NOT A LOOP
+playerInput.forEach((button) => button.addEventListener("click", gameFlow));
 
 
-let playerInput = document.querySelectorAll("button"); // for each creates a list of instructions for each element specified, NOT A LOOP
-playerInput.forEach((button) => button.addEventListener("click", (event) => gameFlow (event)))
-
-
-function gameFlow (event){ // created this f() to dissociate it from button input, runs the whole process
-    playerChoice = event.target.value;
-    document.querySelector(".playerText").textContent = "You chose ! get ready";
+function gameFlow (buttonPress){ // created this f() to dissociate it from button input, runs the whole process
+    playerChoice = buttonPress.target.value;
+    document.querySelector(".playerText").textContent = "BOT chose ! get ready";
 
     botChoice = computerChoice();
 
@@ -52,43 +43,22 @@ function computerChoice (){ //botChoice generate a number between 1 and 99, each
     }
 }
 
+function symbol (choice){ // defines players symbol strenghs, receive a string a give out an array with pN and respective strenghts.
 
+    const gameRules = [{Rule1:231},{Rule2:123},{Rule3:321},{setRule:playerChoice}];
 
-function symbolPotency (symbolName){ // define the value of each symbol when player enter his
+    if (gameRules.setRule == "rock"){
+        gameRules.splice()
 
-    let paperWeight = 2;          // could use an object later, see Camille cleaning
-    let scissorsWeight = 2;
-    let rockWeight = 2;
+    }else if (gameRules.setRule == "paper"){
+        //use rule 2
 
-    if  (symbolName === "paper") {
-        paper = paperWeight;
-        scissors = scissorsWeight + 1;
-        rock = rockWeight - 1;
-
-    } else if (symbolName === "scissors"){
-        scissors = scissorsWeight;
-        rock = rockWeight + 1;
-        paper = paperWeight - 1;
-
-    } else if (symbolName === "rock"){
-        rock = rockWeight;
-        paper = paperWeight + 1;
-        scissors = scissorsWeight - 1;
-
-    }
-}
-
-
-function symbolForce (choice){ //compare the string to the number
-
-    if (choice === "rock"){
-        return rock;
-    } else if (choice === "paper"){
-        return paper;
     } else {
-        return scissors;
+        //use rule 3
     }
+
 }
+
 
 function graphAnswer(choice){ // transcribe the choice to a symbol
     if (choice === "rock"){
