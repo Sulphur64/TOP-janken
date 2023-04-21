@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Vina+Sans&display=swap');
+
 body{
     
     display: flex;
@@ -66,7 +68,7 @@ button{
     height: 480px;
     border-radius: 10px;
     background-color: transparent;
-    border: 2px solid black;
+    border: 2px solid aqua;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -74,7 +76,7 @@ button{
     overflow: hidden;
     
 
-    transition: all 2s;
+    transition: all 1s;
 }
 
 .light-path{
@@ -96,7 +98,7 @@ button{
     background-color: rgba(255, 255, 255, 0.5);
     color: aqua;
     font-size: 50px;
-    font-family: monospace;
+    font-family: "Vina Sans";
     border-radius: 5px;
 
     transition: all 2s;
@@ -109,31 +111,6 @@ button{
     align-items: center;
 
     transition: all 3s;
-}
-
-.trialroom-floor{
-    z-index: 2;
-    box-sizing: border-box;
-    height: 150px;
-    width: 350px;
-    background-color: rgb(136, 135, 135);
-    border-top: 1px solid white;
-    border-left: 1px solid white;
-    border-right: 1px solid white;
-
-    border-top-right-radius: 150px;
-    border-top-left-radius: 150px;
-
-    padding-bottom: 40px;
-    
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    flex-shrink: 0;
-    flex-grow: 0;
-
 }
 
 .runewall{
@@ -160,7 +137,7 @@ button{
     width: 80px;
 
     border-radius: 100%;
-    border: 5px solid lightgray;
+    border: 3px solid lightgray;
     background-color: black;
     flex-shrink: 0;
 
@@ -176,7 +153,7 @@ button{
     width: 100px;
 
     border-radius: 100%;
-    border: 5px solid lightgray;
+    border: 3px solid lightgray;
     background-color: rgba(255, 0, 0, 0.5) ;
 
     display: flex;
@@ -203,6 +180,39 @@ button{
     transition: 3s;
 }
 
+.trialroom-floor{
+    z-index: 2;
+    box-sizing: border-box;
+    height: 150px;
+    width: 350px;
+    background-color: rgb(136, 135, 135);
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+
+    border-top-right-radius: 150px;
+    border-top-left-radius: 150px;
+
+    padding-bottom: 10px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    flex-shrink: 0;
+    flex-grow: 0;
+
+}
+
+.character{
+    z-index: -1;
+    color: aquamarine;
+    position: absolute;
+
+    margin-top: 80px;
+}
+
 .trialroom-exit-door{
     z-index: 3;
     width: 27px;
@@ -216,5 +226,34 @@ button{
     transition: all 1s;
 
     margin-top: -30px;
-    margin-bottom: auto;
+    
+}
+
+.player-choice-container{
+    z-index: 2;
+    box-sizing: border-box;
+    position: absolute;
+    height: 80px;
+    width: 200px;
+    border-radius: 100%;
+
+    background-color: transparent;
+    
+    margin-top: 50px;
+
+}
+
+.challenge-button{
+    
+    height: 80px;
+    width: 200px;
+    border-radius: 100%;
+    background-color: rgb(56, 56, 56);
+    color: aquamarine;
+    cursor: pointer;
+
+    font-family: "Permanent Marker";
+    text-align: center;
+
+
 }

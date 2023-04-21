@@ -8,24 +8,37 @@ const lightPath = document.createElement("div");
 
 const trialRoomFloor= document.createElement("div");
 
+const challengeButton = document.createElement("button"); // will launch then pop
 
 
 body.appendChild(gameWindow);
 
-gameFlow()
+
+gameFlow();
 
 function gameFlow () {
 
-    introduction();
+    introduction(); //intro anim
 
-    gameWindow.addEventListener("transitionend", ()=>{    
-     botTalk(1);
-     gameWindow.addEventListener("click", trialRoom,{once:true})
+    gameWindow.addEventListener("transitionend", ()=>{ //entering the main room
+        botTalk(0);
+
+        gameWindow.addEventListener("click",()=>{ // in the room, placing the setup
+            trialRoom();
+            challengeBot(0);
+            botTalk(1);
+            botEyeState(0);
+
+            challengeButton.addEventListener("click",()=>{ // launching janken
+
+
+            });
+
+        },{once:true})
+
     },{once:true});
 
-    
-
-}
+};
 
 function introduction() { // create the start button and initialize the game UI
 
@@ -59,12 +72,12 @@ function introduction() { // create the start button and initialize the game UI
 
 
 function botTalk (dialog){ //BOT speaking, handle the scores and matches too
-    if (dialog==1){
+    if (dialog==0){
         botSpeak.classList.add("bot-speak")
         body.insertBefore(botSpeak,gameWindow)
         botSpeak.textContent="ENTER, HUMAN"
-    } else if (dialog==2){
-        gameWindow.appendChild(botSpeak)
+    } else if (dialog==1){
+        gameWindow.prepend(botSpeak)
         botSpeak.textContent="IT IS TIME."
     }
 };
@@ -75,10 +88,11 @@ function botEyeState (state) {
     const botEyePupil = document.createElement("div");
     botEyePupil.textContent="\u{2022}";
     botEye.classList.add("bot-eye");
-    gameWindow.insertBefore(botEye,trialRoomFloor)
-    
 
-    if (state==1){ //wakes up {eye from black to red, pupil appear}
+    if (state==0){ //eye closed
+        gameWindow.insertBefore(botEye,trialRoomFloor);
+    
+    }else if (state==1){ //wakes up {eye from black to red, pupil appear}
         botEye.classList.remove("bot-eye");
         botEye.classList.add("bot-eye-active");
         botEyePupil.classList.add("bot-eye-pupil");
@@ -103,28 +117,68 @@ function getRandomText(length) {
       counter += 1;
     }
     return result;
-}
+};
 
 function trialRoom () { // main janken event, this will loop every game of 5
+
+    const trialRoomExitDoor= document.createElement("div");
+    const runeWall = document.createElement("div");
+    const character= document.createElement("div")
+
     lightPath.remove();
 
     gameWindow.classList.add("gamewindow-while-game");
 
-    botTalk(2);
+    
     
     trialRoomFloor.classList.add("trialroom-floor");
     gameWindow.appendChild(trialRoomFloor);
-    trialRoomFloor.textContent="\u{A19C}";
 
-    const trialRoomExitDoor= document.createElement("div")
+    trialRoomFloor.appendChild(character)
+    character.classList.add("character")
+    character.textContent="\u{A19C}";
+
+    
     trialRoomExitDoor.classList.add("trialroom-exit-door")
     trialRoomFloor.prepend(trialRoomExitDoor)
 
-    botEyeState();
 
-    const runeWall = document.createElement("div")
+    
     runeWall.classList.add('runewall')
     gameWindow.insertBefore(runeWall,trialRoomFloor)
     runeWall.textContent=getRandomText(25000)
 
-}
+};
+
+function challengeBot(state){ //will contain the player interface and symbol
+    
+    const playerChoiceContainer = document.createElement("div");
+
+        const buttonRock = document.createElement("button");
+        const buttonPaper = document.createElement("button");
+        const buttonScissors = document.createElement("button");
+
+    trialRoomFloor.appendChild(playerChoiceContainer);
+    playerChoiceContainer.classList.add("player-choice-container");
+
+    challengeButton.classList.add("challenge-button");
+    challengeButton.textContent= 'I defy you !';
+
+    if (state==0){
+    playerChoiceContainer.appendChild(challengeButton);
+
+    } else if (state==1){ // button initiating the janken
+        challengeButton.remove();
+        buttonRock.classList.add("button-rock");
+        buttonPaper.classList.add("button-paper");
+        buttonScissors.classList.add("button-scissors");
+
+    }
+
+
+
+
+    
+
+
+};
