@@ -68,7 +68,7 @@ button{
     height: 480px;
     border-radius: 10px;
     background-color: transparent;
-    border: 2px solid aqua;
+    border: 2px solid white;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -147,10 +147,10 @@ button{
     transition: 3s;
 }
 
-.bot-eye-active{
+.bot-eye-active{ /* pseudostate */
    
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 80px;
 
     border-radius: 100%;
     border: 3px solid lightgray;
@@ -158,9 +158,12 @@ button{
 
     display: flex;
     align-items: center;
-    
+    justify-content: center;
 
-    transition: 3s;
+    margin-top: 10px;
+    margin-bottom: auto;
+
+
 }
 
 .bot-eye-pupil{
@@ -171,11 +174,7 @@ button{
     border-radius: 100%;
     border: 1px solid rgba(0, 0, 0, 0.5);
     background-color: rgba(255, 0, 0, 0.5) ;
-    color: rgba(255, 255, 255, 0.5);
-
-    display: flex;
-    align-items: center;
-    
+    color: rgba(255, 255, 255, 0.5);    
 
     transition: 3s;
 }
@@ -218,7 +217,7 @@ button{
     width: 27px;
     height: 60px;
     
-    background-color: black;
+    background-color: transparent;
 
     border: 2px solid white;
     border-bottom: 0;
@@ -230,7 +229,7 @@ button{
 }
 
 .player-choice-container{
-    z-index: 2;
+    z-index: 3;
     box-sizing: border-box;
     position: absolute;
     height: 80px;
@@ -240,6 +239,9 @@ button{
     background-color: transparent;
     
     margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
 }
 
@@ -256,4 +258,23 @@ button{
     text-align: center;
 
 
+}
+
+.button-rock,
+.button-paper,
+.button-scissors{
+    z-index: 4;
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    background-color: rgba(127, 255, 212);
+    border: 1px solid white;
+    text-align: center;
+    font-size: 30px;
+
+    box-shadow: inset 5px 5px 10px white,1px 20px 15px -10px  aquamarine;
+}
+
+.button-paper{
+    margin-top: -100px;
 }

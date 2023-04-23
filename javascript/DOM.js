@@ -2,13 +2,30 @@ const body = document.querySelector("body");
 
 const gameWindow = document.createElement("div");
 
-const botSpeak = document.createElement("div")
+    const botSpeak = document.createElement("div");
+
+    const runeWall = document.createElement("div");
+
+    const botEyeSocket = document.createElement("div");
+        const botEyePupil = document.createElement("div");  
+
+
+    const trialRoomFloor= document.createElement("div");
+        const trialRoomExitDoor= document.createElement("div");
+        const character= document.createElement("div");
+
+
+            const playerChoiceContainer = document.createElement("div"); //placed outside, will be used by Algo
+                const challengeButton = document.createElement("button");
+
+                const buttonRock = document.createElement("button");
+                const buttonPaper = document.createElement("button");
+                const buttonScissors = document.createElement("button");
+
 
 const lightPath = document.createElement("div");
 
-const trialRoomFloor= document.createElement("div");
 
-const challengeButton = document.createElement("button"); // will launch then pop
 
 
 body.appendChild(gameWindow);
@@ -16,7 +33,7 @@ body.appendChild(gameWindow);
 
 gameFlow();
 
-function gameFlow () {
+function gameFlow () { //each stage will get cut into a function later
 
     introduction(); //intro anim
 
@@ -27,12 +44,14 @@ function gameFlow () {
             trialRoom();
             challengeBot(0);
             botTalk(1);
-            botEyeState(0);
+            botEye(0);
 
             challengeButton.addEventListener("click",()=>{ // launching janken
+                botEye(1);
+                botTalk(2);
+                challengeBot(1);
 
-
-            });
+            },{once:true});
 
         },{once:true})
 
@@ -60,7 +79,6 @@ function introduction() { // create the start button and initialize the game UI
     startButton.addEventListener("transitionend",(event)=>{
         startButton.remove();
         gameWindow.classList.add ("gamewindow-while-door");
-        console.log(event)
         
         body.appendChild(lightPath);
         lightPath.classList.add("light-path");
@@ -72,38 +90,41 @@ function introduction() { // create the start button and initialize the game UI
 
 
 function botTalk (dialog){ //BOT speaking, handle the scores and matches too
+
     if (dialog==0){
         botSpeak.classList.add("bot-speak")
         body.insertBefore(botSpeak,gameWindow)
         botSpeak.textContent="ENTER, HUMAN"
+
     } else if (dialog==1){
         gameWindow.prepend(botSpeak)
         botSpeak.textContent="IT IS TIME."
-    }
+
+    } else if (dialog==2){ //after challengeclick, choose your symbol
+        botSpeak.textContent="PREPARE YOURSELF"
+
+    } //else if : player made his choice, track score, tell result
 };
 
-function botEyeState (state) {
+function botEye (state) {
 
-    const botEye = document.createElement("div");
-    const botEyePupil = document.createElement("div");
     botEyePupil.textContent="\u{2022}";
-    botEye.classList.add("bot-eye");
+    
 
     if (state==0){ //eye closed
-        gameWindow.insertBefore(botEye,trialRoomFloor);
+        botEyeSocket.classList.add("bot-eye");
+        gameWindow.insertBefore(botEyeSocket,trialRoomFloor);
     
     }else if (state==1){ //wakes up {eye from black to red, pupil appear}
-        botEye.classList.remove("bot-eye");
-        botEye.classList.add("bot-eye-active");
+        botEyeSocket.classList.replace('bot-eye',"bot-eye-active")
         botEyePupil.classList.add("bot-eye-pupil");
-        botEye.appendChild(botEyePupil);
+        botEyeSocket.appendChild(botEyePupil);
 
-    } else if (state==2){ //woke, pupil focusing on the player
-        botEye.classList.remove("bot-eye");
-        botEye.classList.add("bot-eye-active");
-        botEyePupil.classList.add("bot-eye-pupil");
-        botEye.appendChild(botEyePupil);
-        botEye.setAttribute('style','align-items:"flex-end"')
+    } else if (state==2){ //[after player selection] woke, pupil focusing on the player
+        
+        botEyeSocket.setAttribute('style','justify-content: "flex-end"')
+        //change background color of playerchoice to simulate lightfocus, 
+        //create a cone of light with a div and change textcontent of pupil with robotsymbol
     }
 };
 
@@ -121,15 +142,11 @@ function getRandomText(length) {
 
 function trialRoom () { // main janken event, this will loop every game of 5
 
-    const trialRoomExitDoor= document.createElement("div");
-    const runeWall = document.createElement("div");
-    const character= document.createElement("div")
+
 
     lightPath.remove();
 
     gameWindow.classList.add("gamewindow-while-game");
-
-    
     
     trialRoomFloor.classList.add("trialroom-floor");
     gameWindow.appendChild(trialRoomFloor);
@@ -142,8 +159,6 @@ function trialRoom () { // main janken event, this will loop every game of 5
     trialRoomExitDoor.classList.add("trialroom-exit-door")
     trialRoomFloor.prepend(trialRoomExitDoor)
 
-
-    
     runeWall.classList.add('runewall')
     gameWindow.insertBefore(runeWall,trialRoomFloor)
     runeWall.textContent=getRandomText(25000)
@@ -151,34 +166,32 @@ function trialRoom () { // main janken event, this will loop every game of 5
 };
 
 function challengeBot(state){ //will contain the player interface and symbol
-    
-    const playerChoiceContainer = document.createElement("div");
-
-        const buttonRock = document.createElement("button");
-        const buttonPaper = document.createElement("button");
-        const buttonScissors = document.createElement("button");
 
     trialRoomFloor.appendChild(playerChoiceContainer);
+
     playerChoiceContainer.classList.add("player-choice-container");
 
-    challengeButton.classList.add("challenge-button");
-    challengeButton.textContent= 'I defy you !';
+    if (state==0){       
+        playerChoiceContainer.appendChild(challengeButton);
+        challengeButton.classList.add("challenge-button");
+        challengeButton.textContent= 'I defy you !';
 
-    if (state==0){
-    playerChoiceContainer.appendChild(challengeButton);
-
-    } else if (state==1){ // button initiating the janken
+    } else if (state==1){ // button initiating the janken /changebackground of container
         challengeButton.remove();
+
         buttonRock.classList.add("button-rock");
         buttonPaper.classList.add("button-paper");
         buttonScissors.classList.add("button-scissors");
 
+        buttonRock.textContent= "\u{270A}";
+        buttonPaper.textContent= "\u{270B}";
+        buttonScissors.textContent= "\u{270C}";
+
+        playerChoiceContainer.appendChild(buttonRock);
+        playerChoiceContainer.appendChild(buttonPaper);
+        playerChoiceContainer.appendChild(buttonScissors);
+
+    } else if (state==2){// the player made his choice
+        // non selected buttons disappear
     }
-
-
-
-
-    
-
-
 };
