@@ -22,8 +22,9 @@ const gameWindow = document.createElement("div");
                 const buttonPaper = document.createElement("button");
                 const buttonScissors = document.createElement("button");
 
-
+//props
 const lightPath = document.createElement("div");
+const lightCone = document.createElement("div");
 
 
 
@@ -50,6 +51,18 @@ function gameFlow () { //each stage will get cut into a function later
                 botEye(1);
                 botTalk(2);
                 challengeBot(1);
+
+                const playerButtons = playerChoiceContainer.querySelectorAll("button");
+                
+                playerButtons.forEach(button => {
+                    button.addEventListener("click",()=>{
+                        botEye(2);
+                        botTalk(3);
+                        gameAlgorithm(button.dataset.rule,button.dataset.symbol)
+
+
+                    });
+                });
 
             },{once:true});
 
@@ -94,22 +107,25 @@ function botTalk (dialog){ //BOT speaking, handle the scores and matches too
     if (dialog==0){
         botSpeak.classList.add("bot-speak")
         body.insertBefore(botSpeak,gameWindow)
-        botSpeak.textContent="ENTER, HUMAN"
+        botSpeak.textContent="TOUCH THE ARCH, HUMAN."
 
     } else if (dialog==1){
         gameWindow.prepend(botSpeak)
         botSpeak.textContent="IT IS TIME."
 
     } else if (dialog==2){ //after challengeclick, choose your symbol
-        botSpeak.textContent="PREPARE YOURSELF"
+        botSpeak.textContent="PREPARE YOURSELF."
 
-    } //else if : player made his choice, track score, tell result
+    } else if (dialog==3){ // player made his choice, track score, tell result
+        setTimeout(() => { botSpeak.textContent="ROCK." }, 100);
+        setTimeout(() => { botSpeak.textContent="PAPER." }, 2100);
+        setTimeout(() => { botSpeak.textContent="SCISSORS." }, 3100);
+        setTimeout(() => { botSpeak.textContent=`${buttonPaper.textContent}` }, 4100);
+
+    } 
 };
 
 function botEye (state) {
-
-    botEyePupil.textContent="\u{2022}";
-    
 
     if (state==0){ //eye closed
         botEyeSocket.classList.add("bot-eye");
@@ -122,8 +138,12 @@ function botEye (state) {
 
     } else if (state==2){ //[after player selection] woke, pupil focusing on the player
         
-        botEyeSocket.setAttribute('style','justify-content: "flex-end"')
-        //change background color of playerchoice to simulate lightfocus, 
+        botEyeSocket.style.alignItems= "flex-end";
+
+        playerChoiceContainer.style.backgroundColor= "rgba(167, 0, 0, 0.7)";
+        
+        lightCone.classList.add("light-cone");
+        botEyeSocket.appendChild(lightCone);
         //create a cone of light with a div and change textcontent of pupil with robotsymbol
     }
 };
@@ -187,6 +207,14 @@ function challengeBot(state){ //will contain the player interface and symbol
         buttonPaper.textContent= "\u{270B}";
         buttonScissors.textContent= "\u{270C}";
 
+        buttonRock.setAttribute('data-rule',0); //will read the input to set a rule
+        buttonPaper.setAttribute('data-rule',1);
+        buttonScissors.setAttribute('data-rule',2);
+
+        buttonRock.setAttribute('data-symbol','rock'); //will real the input to take from the rule
+        buttonPaper.setAttribute('data-symbol','paper');
+        buttonScissors.setAttribute('data-symbol','scissors');
+
         playerChoiceContainer.appendChild(buttonRock);
         playerChoiceContainer.appendChild(buttonPaper);
         playerChoiceContainer.appendChild(buttonScissors);
@@ -194,4 +222,66 @@ function challengeBot(state){ //will contain the player interface and symbol
     } else if (state==2){// the player made his choice
         // non selected buttons disappear
     }
+};
+
+function gameAlgorithm (dataRule,dataChoice){ //take the rule, apply the rule to players choices, return values of choices
+
+
+    const ruleSet = [
+        {rock:2, paper:3, scissors:1}, //if rock
+        {rock:1, paper:2, scissors:3}, // if paper
+        {rock:3, paper:1, scissors:2} // if scissors
+    ];
+
+    const rule = ruleSet[dataRule]
+    const playerValue = rule[dataChoice] //solve player
+
+    function computerChoice (){
+
+        let random = Math.floor(Math.random()*99);
+    
+        if (random <= 33){
+            return "rock";
+    
+        } else if ((random <= 66) &&(random >= 33)){
+            return "paper";
+    
+        } else {
+            return "scissors";
+    
+        }
+    };
+
+    const botValue = rule[computerChoice()] //solve computer
+
+    let matchNum = 0;
+    let playerWon = 0;
+    let BotWon = 0;
+
+
+    if (matchNum<=5){
+        if (playerValue>botValue){
+            // you win. next match.
+            playerWon += 1;
+
+        } else if (playerValue<botValue){
+            // you lose. next match.
+            BotWon += 1;
+
+        } else {
+            // equality. next match.
+        };
+
+        matchNum += 1;
+
+    } else {
+        if (playerWon>BotWon){
+            // you win the game. Touch the Arch.
+        } else if (playerWon<BotWon){
+            // you lost the game. Touch the Arch.
+        } else {
+            // equality. restart.
+        };
+
+    };
 };
