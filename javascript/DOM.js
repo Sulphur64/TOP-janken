@@ -26,7 +26,7 @@ const gameWindow = document.createElement("div");
 const lightPath = document.createElement("div");
 const lightCone = document.createElement("div");
 
-
+const playerChoiceButtonData = [0];
 
 
 body.appendChild(gameWindow);
@@ -56,9 +56,11 @@ function gameFlow () { //each stage will get cut into a function later
                 
                 playerButtons.forEach(button => {
                     button.addEventListener("click",()=>{
+                        playerChoiceButtonData.push(button.dataset.rule,button.dataset.symbol);//used to get gameAlgo result in botTalk(3)
+                        
                         botEye(2);
                         botTalk(3);
-                        gameAlgorithm(button.dataset.rule,button.dataset.symbol)
+                        
 
 
                     });
@@ -120,7 +122,10 @@ function botTalk (dialog){ //BOT speaking, handle the scores and matches too
         setTimeout(() => { botSpeak.textContent="ROCK." }, 100);
         setTimeout(() => { botSpeak.textContent="PAPER." }, 2100);
         setTimeout(() => { botSpeak.textContent="SCISSORS." }, 3100);
-        setTimeout(() => { botSpeak.textContent=`${buttonPaper.textContent}` }, 4100);
+        setTimeout(() => { 
+            botSpeak.textContent=`${gameAlgorithm(playerChoiceButtonData[1],playerChoiceButtonData[2])}`;
+
+        }, 4100);
 
     } 
 };
@@ -148,17 +153,7 @@ function botEye (state) {
     }
 };
 
-function getRandomText(length) {
-    let result = '';
-    const characters = '  ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const charactersLength = characters.length;
-    let counter = 0;
-    while (counter < length) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-      counter += 1;
-    }
-    return result;
-};
+
 
 function trialRoom () { // main janken event, this will loop every game of 5
 
@@ -183,6 +178,18 @@ function trialRoom () { // main janken event, this will loop every game of 5
     gameWindow.insertBefore(runeWall,trialRoomFloor)
     runeWall.textContent=getRandomText(25000)
 
+};
+
+function getRandomText(length) {
+    let result = '';
+    const characters = '  ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      counter += 1;
+    }
+    return result;
 };
 
 function challengeBot(state){ //will contain the player interface and symbol
@@ -222,66 +229,4 @@ function challengeBot(state){ //will contain the player interface and symbol
     } else if (state==2){// the player made his choice
         // non selected buttons disappear
     }
-};
-
-function gameAlgorithm (dataRule,dataChoice){ //take the rule, apply the rule to players choices, return values of choices
-
-
-    const ruleSet = [
-        {rock:2, paper:3, scissors:1}, //if rock
-        {rock:1, paper:2, scissors:3}, // if paper
-        {rock:3, paper:1, scissors:2} // if scissors
-    ];
-
-    const rule = ruleSet[dataRule]
-    const playerValue = rule[dataChoice] //solve player
-
-    function computerChoice (){
-
-        let random = Math.floor(Math.random()*99);
-    
-        if (random <= 33){
-            return "rock";
-    
-        } else if ((random <= 66) &&(random >= 33)){
-            return "paper";
-    
-        } else {
-            return "scissors";
-    
-        }
-    };
-
-    const botValue = rule[computerChoice()] //solve computer
-
-    let matchNum = 0;
-    let playerWon = 0;
-    let BotWon = 0;
-
-
-    if (matchNum<=5){
-        if (playerValue>botValue){
-            // you win. next match.
-            playerWon += 1;
-
-        } else if (playerValue<botValue){
-            // you lose. next match.
-            BotWon += 1;
-
-        } else {
-            // equality. next match.
-        };
-
-        matchNum += 1;
-
-    } else {
-        if (playerWon>BotWon){
-            // you win the game. Touch the Arch.
-        } else if (playerWon<BotWon){
-            // you lost the game. Touch the Arch.
-        } else {
-            // equality. restart.
-        };
-
-    };
 };
