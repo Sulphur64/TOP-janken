@@ -2,6 +2,7 @@ const score = [{playerWon: 0, BotWon: 0, totalMatches: 0}];
 
 function gameAlgorithm (dataRule,dataChoice){ //take the rule, apply the rule to players choices, return values of choices
 
+    botEyePupil.textContent = "";
 
     const ruleSet = [
         {rock:2, paper:3, scissors:1}, //if rock
@@ -11,8 +12,14 @@ function gameAlgorithm (dataRule,dataChoice){ //take the rule, apply the rule to
 
     const rule = ruleSet[dataRule];
     const playerValue = rule[dataChoice]; //solve player
-    const botValue = rule[computerChoice()]; //solve computer
+
     
+    const botValue = [computerChoice()]
+
+    while (botValue.length !== 1) botValue.pop(); //reset button value before initializing anything !
+     
+    botValue.push(rule[botValue[0]]); // get string for pupil, then correlates rule to get weight. no other way known to clone  computer choice.
+
 
     function computerChoice (){
     
@@ -30,52 +37,77 @@ function gameAlgorithm (dataRule,dataChoice){ //take the rule, apply the rule to
         }
     };
 
+
+    score[0].totalMatches += 1;
     
-
     if (score[0].totalMatches <= 4){ //scorekept until 4, last match will deliver the outcome
+        
+        botEyePupil.textContent = document.querySelector(`.button-${botValue[0]}`).textContent; //botvalue string correlated to buttons class to get textcontent
 
-        score[0].totalMatches += 1;
-        botEyePupil.textContent = `${botValue}`; //refactor botvalue to get the string correlated to buttons ?
-
-        if (playerValue > botValue){
+        if (playerValue > botValue[1]){
             score[0].playerWon += 1;
-            return `YOU WON. ${score[0].playerWon}-${score[0].BotWon}, ${5-score[0].totalMatches} LEFT.`;
+            return `YOU WON.  [${score[0].playerWon}-${score[0].BotWon}], [${5-score[0].totalMatches} LEFT].`;
 
-        } else if (playerValue < botValue){
+        } else if (playerValue < botValue[1]){
             score[0].BotWon += 1;
-            return `YOU LOST. ${score[0].playerWon}-${score[0].BotWon}, ${5-score[0].totalMatches} LEFT.`;
+            return `YOU LOST. [${score[0].playerWon}-${score[0].BotWon}], [${5-score[0].totalMatches} LEFT].`;
 
         } else {
-            return `EQUALITY. ${score[0].playerWon}-${score[0].BotWon}, ${5-score[0].totalMatches} LEFT.`;
+            return `EQUALITY. [${score[0].playerWon}-${score[0].BotWon}], [${5-score[0].totalMatches} LEFT].`;
         };
 
     } else { // handle the last match and the outcome.
 
-        botEyePupil.textContent = `${botValue} END`;
+        botEyePupil.textContent = document.querySelector(`.button-${botValue[0]}`).textContent;
 
-        if (playerValue > botValue){
+        if (playerValue > botValue[1]){
             score[0].playerWon += 1;
+            endGame();
+            return outcome();
 
-        } else if (playerValue < botValue){
+        } else if (playerValue < botValue[1]){
             score[0].BotWon += 1;
-            
-        };
+            endGame();
+            return outcome();
 
-        outcome(); //problem here ! 
+        } else {
+            endGame();
+            return outcome ();
+
+        };          
     };
 
 
+
     function outcome(){
+
         if (score[0].playerWon > score[0].BotWon){
-            return `impressive, human. you can pass. Touch the arch.`;
+            runeWall.style.color= "aquamarine";
+            return `impressive, Human. Touch the Arch.`;
 
         } else if (score[0].playerWon < score[0].BotWon){
-            return `YOU FAILED, AS PREDICTED. TOUCH THE ARCH.`;
+            runeWall.style.color= "aqua";
+            return `YOU FAILED. TOUCH THE ARCH.`;
 
         } else {
             return `EQUALITY. TOUCH THE ARCH.`;
 
         };
+
+        // check if EVERYTHING reset, could generate errors
+    };
+
+function endGame(){ //reset the room
+        botEye(3);
+        challengeBot(2);
+
+        trialRoomExitDoor.addEventListener ("click", ()=>{ // arch activates and become clickable, loop to DOM:l 44
+            trialRoom();
+            challengeBot(0);
+            botTalk(1);
+            botEye(0);
+
+        });
     };
 
 };

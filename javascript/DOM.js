@@ -56,13 +56,14 @@ function gameFlow () { //each stage will get cut into a function later
                 
                 playerButtons.forEach(button => {
                     button.addEventListener("click",()=>{
+
+                        while (playerChoiceButtonData.length !== 1) playerChoiceButtonData.pop();
+
                         playerChoiceButtonData.push(button.dataset.rule,button.dataset.symbol);//used to get gameAlgo result in botTalk(3)
                         
                         botEye(2);
                         botTalk(3);
                         
-
-
                     });
                 });
 
@@ -149,8 +150,12 @@ function botEye (state) {
         
         lightCone.classList.add("light-cone");
         botEyeSocket.appendChild(lightCone);
-        //create a cone of light with a div and change textcontent of pupil with robotsymbol
-    }
+        
+    } else if (state==3){ //match ended, fade to black
+        botEyeSocket.removeChild();
+        botEyeSocket.classList.replace('bot-eye-active',"bot-eye")
+
+    };
 };
 
 
@@ -226,7 +231,8 @@ function challengeBot(state){ //will contain the player interface and symbol
         playerChoiceContainer.appendChild(buttonPaper);
         playerChoiceContainer.appendChild(buttonScissors);
 
-    } else if (state==2){// the player made his choice
-        // non selected buttons disappear
+    } else if (state==2){// match ended
+        playerChoiceContainer.removeChild()
+        trialRoomExitDoor.classList.add("trialroom-exit-door-active")
     }
 };
