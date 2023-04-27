@@ -144,9 +144,9 @@ function botEye (state) {
 
     } else if (state==2){ //[after player selection] woke, pupil focusing on the player
         
-        botEyeSocket.style.alignItems= "flex-end";
+        botEyePupil.style.cssText = "transform : translateY(131px);";
 
-        playerChoiceContainer.style.backgroundColor= "rgba(167, 0, 0, 0.7)";
+        playerChoiceContainer.style.backgroundColor = "rgba(167, 0, 0, 0.7)";
         
         lightCone.classList.add("light-cone");
         botEyeSocket.appendChild(lightCone);
