@@ -152,8 +152,9 @@ function botEye (state) {
         botEyeSocket.appendChild(lightCone);
         
     } else if (state==3){ //match ended, fade to black
-        botEyeSocket.removeChild();
-        botEyeSocket.classList.replace('bot-eye-active',"bot-eye")
+        botEyeSocket.removeChild(botEyePupil);
+        botEyeSocket.removeChild(lightCone);
+        botEyeSocket.classList.replace('bot-eye-active',"bot-eye");
 
     };
 };
@@ -232,7 +233,8 @@ function challengeBot(state){ //will contain the player interface and symbol
         playerChoiceContainer.appendChild(buttonScissors);
 
     } else if (state==2){// match ended
-        playerChoiceContainer.removeChild()
-        trialRoomExitDoor.classList.add("trialroom-exit-door-active")
+        trialRoomFloor.removeChild(playerChoiceContainer);
+
+        trialRoomExitDoor.classList.add("trialroom-exit-door-active");
     }
 };

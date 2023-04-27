@@ -82,15 +82,18 @@ function gameAlgorithm (dataRule,dataChoice){ //take the rule, apply the rule to
     function outcome(){
 
         if (score[0].playerWon > score[0].BotWon){
-            runeWall.style.color= "aquamarine";
-            return `impressive, Human. Touch the Arch.`;
+            runeWall.style.color = "aquamarine";
+            botSpeak.style.fontSize = "25px"
+            return `impressive, Human. Touch the Arch. challenge the next Guardian, may you enter Valhalla.`;
 
         } else if (score[0].playerWon < score[0].BotWon){
             runeWall.style.color= "aqua";
-            return `YOU FAILED. TOUCH THE ARCH.`;
+            botSpeak.style.fontSize = "25px"
+            return `YOU FAILED. TOUCH THE ARCH. COME BACK WHEN YOUR THIRD EYE IS FULLY OPENED.`;
 
         } else {
-            return `EQUALITY. TOUCH THE ARCH.`;
+            botSpeak.style.fontSize = "25px"
+            return `EQUALITY. A FAILURE OF BOTH OF US. TOUCH THE ARCH AND CHALLENGE ANOTHER GUARDIAN.`;
 
         };
 
@@ -102,11 +105,9 @@ function endGame(){ //reset the room
         challengeBot(2);
 
         trialRoomExitDoor.addEventListener ("click", ()=>{ // arch activates and become clickable, loop to DOM:l 44
-            trialRoom();
-            challengeBot(0);
-            botTalk(1);
-            botEye(0);
 
+            location.reload();
+            return false;
         });
     };
 
